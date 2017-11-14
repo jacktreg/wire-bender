@@ -29,17 +29,18 @@ void setup() {
   // attaches the servo on pin 9 to the servo object
   myservo.attach(servo_pin);
   Serial.begin(9600);
+  pinMode(step_pin, OUTPUT);
+  pinMode(direction_pin, OUTPUT);
 }
 
 void loop() {
   if (Serial.available() > 0) {
-    // Bends the wire apprx. 50 degrees
-    // myservo.write(100);
-    // delay(2000);
-    // myservo.write(165);
-    // delay(2000);
+
     int n = Serial.parseInt();
-    steps(n);
+    if (n > 0) {
+      steps(-1 * n);
+    }
+
 
 
 
@@ -69,19 +70,15 @@ void loop() {
 void steps(int number_of_steps) {
   bool move_forward = true;
   // Establishing the direction
-  if (number_of_steps < 0) {
+  if (number_of_steps >= 0) {
+    move_forward = true;
+  } else {
     move_forward = false;
     number_of_steps = -number_of_steps;
   }
   // Generating the steps
   for (int i = 0; i < number_of_steps; i++) {
     step(move_forward);
-    if (move_forward) {
-      angle = (angle + STEP_ANGLE) % 360;
-    } else {
-      angle = (angle - STEP_ANGLE) % 360;
-    }
-    // Delay for proper speed
     delayMicroseconds(STEP_DELAY);
   }
 }
