@@ -40,7 +40,7 @@ void setup() {
   // attaches the servo on pin 9 to the servo object
   bend_servo.attach(servo_pin);
   // Initialize the servo to a certain angle
-  bend_servo.write(97);
+  bend_servo.write(94);
   // Register the cloud function with a name and with the function
   // (Name of function, function call)
   Particle.function("bend", bend_to_angle);
@@ -75,13 +75,13 @@ int bend_to_angle(String angle_string) {
     delay(1000);
     digitalWrite(solenoid_pin, LOW);
     delay(1000);
-    bend_servo.write(97);
+    bend_servo.write(94);
     return 1;
-  else {
+  } else {
     Serial.print("Warning: value ");
-    Serial.print(val);
+    Serial.print(angle);
     Serial.println(" is outside of valid Servo range");
-    return -1
+    return -1;
   }
 
   // scale it to use it with the servo (value between 0 and 180)
