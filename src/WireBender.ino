@@ -31,6 +31,10 @@ const int STEPS_PER_TURN = 200;
 const int STEP_DELAY = 5000;
 // The angle of a step for the stepper motor
 const float STEP_ANGLE = 1.8;
+// The current approximation for MM / STEP
+const float MM_PER_STEP = 0.1625;
+// The theoretical MM / STEP given radius of 5.75
+const float TH_MM_PER_STEP = 0.1806415776;
 // Current stepper angle
 float angle = 0.0;
 
@@ -57,7 +61,7 @@ void loop() {
   if (Serial.available() > 0) {
     int n = Serial.parseInt();
     if (n > 0) {
-      steps(-1 * n);
+      steps(mmToSteps(n));
     }
   }
 }
@@ -97,6 +101,41 @@ int bend_to_angle(String angle_string) {
   //   Serial.print(val);
   //   Serial.println(" is outside of valid Servo range");
   // }
+}
+
+// Converts mm to steps given the MM_PER_STEP value (there is some implicit
+// error because this functions maps from real numbers to discrete numbers -
+// also the extruder doesn't always extrude the amount it theoretically
+// should).
+int mmToSteps(float mm) {
+  Serial.print("theoretical error: ");
+  Serial.println(mmToStepsError(mm));
+  return round(mm / MM_PER_STEP);
+}
+
+// Calculates the error from converting mm in real space to steps in discrete
+// space.
+float mmToStepsError(float mm) {
+  return abs(MM_PER_STEP * round(mm / MM_PER_STEP) - mm);
+}
+
+// Utitlity function to play around with the theoretical error that results from
+// mapping from real to discrete space.
+void avgError() {
+  double maxE = 0;
+  double avg = 0;
+  for (int i=0; i<10000; i++) {
+    maxE = max(maxE, mmToStepsError(i));
+    maxE = max(maxE, mmToStepsError((double)i + 0.25));
+    maxE = max(maxE, mmToStepsError((double)i + 0.5));
+    maxE = max(maxE, mmToStepsError((double)i + 0.75));
+    avg = avg + mmToStepsError(i) + mmToStepsError(i + 0.25) + mmToStepsError(i + 0.5) + mmToStepsError(i + 0.75);
+  }
+  avg = avg / 40000.0;
+  Serial.print("maximum theoretical error: ");
+  Serial.println(maxE);
+  Serial.print("avg theoretical error: ");
+  Serial.println(avg);
 }
 
 // Steps the stepper motor number_of_steps steps. If number_of_steps < 0 the
