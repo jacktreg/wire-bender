@@ -7,8 +7,10 @@
 
 // create servo object to control a servo
 Servo bend_servo;
+// Init cloud functions
 // Cloud functions must return int and take one Stringint
 int bend_to_angle(String angle_string);
+int feed_mm(String mm_string);
 // Pin to control the servo
 const int servo_pin = D0;
 // Maximum angle the bending servo can go
@@ -22,9 +24,9 @@ const int MIN_ANGLE = 21;
 // Pin to control the solenoid
 const int solenoid_pin = D1;
 // Step pin for stepper motor
-const int step_pin = D3;
+const int step_pin = D2;
 // Direction pin for stepper motor
-const int direction_pin = D2;
+const int direction_pin = D3;
 // Steps for 360 degree stepper turn
 const int STEPS_PER_TURN = 200;
 // Minimum delay between steps in microseconds
@@ -44,10 +46,11 @@ void setup() {
   // attaches the servo on pin 9 to the servo object
   bend_servo.attach(servo_pin);
   // Initialize the servo to a certain angle
-  bend_servo.write(94);
-  // Register the cloud function with a name and with the function
+  bend_servo.write(98);
+  // Register the clouds function with a name and with the function
   // (Name of function, function call)
   Particle.function("bend", bend_to_angle);
+  Particle.function("feed", feed_mm);
   // Init the serial port
   Serial.begin(9600);
   // Init pins to outpur
@@ -79,7 +82,7 @@ int bend_to_angle(String angle_string) {
     delay(1000);
     digitalWrite(solenoid_pin, LOW);
     delay(1000);
-    bend_servo.write(94);
+    bend_servo.write(98);
     return 1;
   } else {
     Serial.print("Warning: value ");
@@ -101,6 +104,13 @@ int bend_to_angle(String angle_string) {
   //   Serial.print(val);
   //   Serial.println(" is outside of valid Servo range");
   // }
+}
+
+int feed_mm(String mm_string) {
+  // Convert the string angle_string to an integer
+  int mm = mm_string.toInt();
+  steps(mmToSteps(mm));
+  return 1;
 }
 
 // Converts mm to steps given the MM_PER_STEP value (there is some implicit
