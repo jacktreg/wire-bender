@@ -51,13 +51,9 @@ void setup() {
   bend_servo.write(98);
   // Register the clouds function with a name and with the function
   // (Name of function, function call)
-<<<<<<< Updated upstream
   Particle.function("bend", bend_to_angle);
   Particle.function("feed", feed_mm);
   Particle.function("solenoid", soleniod_state);
-=======
-  Particle.function("bend", process_json);
->>>>>>> Stashed changes
   // Init the serial port
   Serial.begin(9600);
   // Init pins to outpur
@@ -82,29 +78,15 @@ void loop() {
 
 }
 
-<<<<<<< Updated upstream
-
 // =================== FEED FUNCTIONS ======================
 
-=======
->>>>>>> Stashed changes
 // this function automatically gets called upon a matching POST request
 int bend_to_angle(String angle_string) {
   // Convert the string angle_string to an integer
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
-<<<<<<< Updated upstream
     bend_servo.write(angle);
-=======
-    digitalWrite(solenoid_pin, HIGH);
-    delay(100);
-    bend_servo.write(angle);
-    delay(500);
-    digitalWrite(solenoid_pin, LOW);
-    delay(500);
-    bend_servo.write(94);
->>>>>>> Stashed changes
     return 1;
   } else {
     Serial.print("Warning: value ");
@@ -128,8 +110,6 @@ int bend_to_angle(String angle_string) {
   // }
 }
 
-<<<<<<< Updated upstream
-
 // =================== FEED FUNCTIONS ======================
 
 // this function automatically gets called upon a matching POST request
@@ -138,11 +118,6 @@ int feed_mm(String mm_string) {
   int mm = mm_string.toInt();
   steps(mmToSteps(mm));
   return 1;
-=======
-void feedBymm(float mm){
-  int num_steps = mmToSteps(mm);
-  steps(num_steps);
->>>>>>> Stashed changes
 }
 
 // Converts mm to steps given the MM_PER_STEP value (there is some implicit
