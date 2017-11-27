@@ -108,30 +108,6 @@ int feed_mm(String mm_string) {
   return 1;
 }
 
-
-// ================== SOLENOID FUNCTIONS ====================
-
-// this function automatically gets called upon a matching POST request
-int soleniod_state(String binary_string) {
-  int binary = binary_string.toInt();
-  switch (binary) {
-    case 0:
-      disengage_solenoid();
-      break;
-    case 1:
-      engage_solenoid();
-      break;
-  }
-}
-
-void engage_solenoid() {
-  digitalWrite(solenoid_pin, HIGH);
-}
-
-void disengage_solenoid() {
-  digitalWrite(solenoid_pin, LOW);
-}
-
 // Converts mm to steps given the MM_PER_STEP value (there is some implicit
 // error because this functions maps from real numbers to discrete numbers -
 // also the extruder doesn't always extrude the amount it theoretically
@@ -197,4 +173,28 @@ void step(bool forward) {
   digitalWrite(step_pin, HIGH);
   // minimum delay is 1.9us
   digitalWrite(step_pin, LOW);
+}
+
+
+// ================== SOLENOID FUNCTIONS ====================
+
+// this function automatically gets called upon a matching POST request
+int soleniod_state(String binary_string) {
+  int binary = binary_string.toInt();
+  switch (binary) {
+    case 0:
+      disengage_solenoid();
+      break;
+    case 1:
+      engage_solenoid();
+      break;
+  }
+}
+
+void engage_solenoid() {
+  digitalWrite(solenoid_pin, HIGH);
+}
+
+void disengage_solenoid() {
+  digitalWrite(solenoid_pin, LOW);
 }
