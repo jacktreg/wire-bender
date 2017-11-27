@@ -9,8 +9,10 @@
 Servo bend_servo;
 // Init cloud functions
 // Cloud functions must return int and take one Stringint
+int process_instructions(String instructions);
 int bend_to_angle(String angle_string);
 int feed_mm(String mm_string);
+int soleniod_state(String binary_string);
 // Pin to control the servo
 const int servo_pin = D0;
 // Maximum angle the bending servo can go
@@ -51,6 +53,7 @@ void setup() {
   bend_servo.write(98);
   // Register the clouds function with a name and with the function
   // (Name of function, function call)
+  Particle.function("process", process_instructions);
   Particle.function("bend", bend_to_angle);
   Particle.function("feed", feed_mm);
   Particle.function("solenoid", soleniod_state);
@@ -60,22 +63,36 @@ void setup() {
   pinMode(step_pin, OUTPUT);
   pinMode(solenoid_pin, OUTPUT);
   pinMode(direction_pin, OUTPUT);
-
-  String s = "b0,f50,b-5,s1,b90,b-5,f50,b90,b-5,f50,b90,b-5,s0,b0,";
-  while (s != ""){
-    int i = s.indexOf(",");
-    String command = s.substring(0,i);
-    String action = command.substring(0,1);
-    String value = command.substring(1);
-    Serial.println("Action: " + action);
-    Serial.println("Value: " + value);
-    Serial.println("-----");
-    s = s.substring(i+1);
-  }
 }
 
 void loop() {
 
+}
+
+int process_instructions(String instructions) {
+  while (instructions != ""){
+    int i = instructions.indexOf(",");
+    String command = instructions.substring(0,i);
+    char action = command.substring(0,1)[0];
+    String value = command.substring(1);
+    Serial.println("Action: " + action);
+    Serial.println("Value: " + value);
+    Serial.println("-----");
+
+    switch (action) {
+      case 'b':
+        bend_to_angle(value);
+        break;
+      case 'f':
+        feed_mm(value);
+        break;
+      case 's':
+        soleniod_state(value);
+        break;
+    }
+    instructions = instructions.substring(i+1);
+  }
+  return 1;
 }
 
 // =================== FEED FUNCTIONS ======================
@@ -86,6 +103,7 @@ int bend_to_angle(String angle_string) {
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
+    // servo_angle = map(angle, 90, -90, 22, )
     bend_servo.write(angle);
     return 1;
   } else {
