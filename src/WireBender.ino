@@ -21,6 +21,8 @@ const int MIN_ANGLE = 21;
 // const int HIGH_SIDE_ANGLE = 97;
 // The angle at which the bending pin is just to the right of the straight wire
 // const int LOW_SIDE_ANGLE = 86;
+// The angle of the server that is directly below the wire.
+const int SERVO_HOME = 94;
 // Pin to control the solenoid
 const int solenoid_pin = D1;
 // Step pin for stepper motor
@@ -49,31 +51,60 @@ void setup() {
   bend_servo.write(98);
   // Register the clouds function with a name and with the function
   // (Name of function, function call)
+<<<<<<< Updated upstream
   Particle.function("bend", bend_to_angle);
   Particle.function("feed", feed_mm);
   Particle.function("solenoid", soleniod_state);
+=======
+  Particle.function("bend", process_json);
+>>>>>>> Stashed changes
   // Init the serial port
   Serial.begin(9600);
   // Init pins to outpur
   pinMode(step_pin, OUTPUT);
   pinMode(solenoid_pin, OUTPUT);
   pinMode(direction_pin, OUTPUT);
+
+  String s = "b0,f50,b-5,s1,b90,b-5,f50,b90,b-5,f50,b90,b-5,s0,b0,";
+  while (s != ""){
+    int i = s.indexOf(",");
+    String command = s.substring(0,i);
+    String action = command.substring(0,1);
+    String value = command.substring(1);
+    Serial.println("Action: " + action);
+    Serial.println("Value: " + value);
+    Serial.println("-----");
+    s = s.substring(i+1);
+  }
 }
 
 void loop() {
 
 }
 
+<<<<<<< Updated upstream
 
 // =================== FEED FUNCTIONS ======================
 
+=======
+>>>>>>> Stashed changes
 // this function automatically gets called upon a matching POST request
 int bend_to_angle(String angle_string) {
   // Convert the string angle_string to an integer
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
+<<<<<<< Updated upstream
     bend_servo.write(angle);
+=======
+    digitalWrite(solenoid_pin, HIGH);
+    delay(100);
+    bend_servo.write(angle);
+    delay(500);
+    digitalWrite(solenoid_pin, LOW);
+    delay(500);
+    bend_servo.write(94);
+>>>>>>> Stashed changes
     return 1;
   } else {
     Serial.print("Warning: value ");
@@ -97,6 +128,7 @@ int bend_to_angle(String angle_string) {
   // }
 }
 
+<<<<<<< Updated upstream
 
 // =================== FEED FUNCTIONS ======================
 
@@ -106,6 +138,11 @@ int feed_mm(String mm_string) {
   int mm = mm_string.toInt();
   steps(mmToSteps(mm));
   return 1;
+=======
+void feedBymm(float mm){
+  int num_steps = mmToSteps(mm);
+  steps(num_steps);
+>>>>>>> Stashed changes
 }
 
 // Converts mm to steps given the MM_PER_STEP value (there is some implicit
