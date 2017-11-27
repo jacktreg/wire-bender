@@ -16,9 +16,9 @@ int soleniod_state(String binary_string);
 // Pin to control the servo
 const int servo_pin = D0;
 // Maximum angle the bending servo can go
-const int MAX_ANGLE = 166;
+const int MAX_ANGLE = 90;
 // Minimum angle the bending servo can go
-const int MIN_ANGLE = 21;
+const int MIN_ANGLE = -90;
 // The angle at which the bending pin is just to the left of the straight wire
 // const int HIGH_SIDE_ANGLE = 97;
 // The angle at which the bending pin is just to the right of the straight wire
@@ -73,21 +73,26 @@ int process_instructions(String instructions) {
   while (instructions != ""){
     int i = instructions.indexOf(",");
     String command = instructions.substring(0,i);
-    char action = command.substring(0,1)[0];
+    String action = command.substring(0,1);
     String value = command.substring(1);
     Serial.println("Action: " + action);
     Serial.println("Value: " + value);
     Serial.println("-----");
 
-    switch (action) {
+    char char_action = action[0];
+
+    switch (char_action) {
       case 'b':
         bend_to_angle(value);
+        delay(1000);
         break;
       case 'f':
         feed_mm(value);
+        delay(100);
         break;
       case 's':
         soleniod_state(value);
+        delay(100);
         break;
     }
     instructions = instructions.substring(i+1);
@@ -103,8 +108,8 @@ int bend_to_angle(String angle_string) {
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
-    // servo_angle = map(angle, 90, -90, 22, )
-    bend_servo.write(angle);
+    int servo_angle = map(angle, 90, -90, 21, 167);
+    bend_servo.write(servo_angle);
     return 1;
   } else {
     Serial.print("Warning: value ");
@@ -143,8 +148,6 @@ int feed_mm(String mm_string) {
 // also the extruder doesn't always extrude the amount it theoretically
 // should).
 int mmToSteps(float mm) {
-  Serial.print("theoretical error: ");
-  Serial.println(mmToStepsError(mm));
   return round(mm / MM_PER_STEP);
 }
 

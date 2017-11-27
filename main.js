@@ -8,7 +8,6 @@ function processContent(content){
     }
   });
   $("#file_contents").val(data.join(",") + ",");
-  console.log(data.join(",") + ",")
 }
 
 function processFile(event) {
@@ -32,6 +31,7 @@ $( document ).ready(function() {
 
   $('#file_form').on('submit', function(event) {
       event.preventDefault();
+      var $form = $(this);
       $.post({
         url: $form.attr('action'),
         data: $form.serialize(),
