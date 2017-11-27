@@ -51,6 +51,7 @@ void setup() {
   // (Name of function, function call)
   Particle.function("bend", bend_to_angle);
   Particle.function("feed", feed_mm);
+  Particle.function("solenoid", soleniod_state);
   // Init the serial port
   Serial.begin(9600);
   // Init pins to outpur
@@ -60,15 +61,11 @@ void setup() {
 }
 
 void loop() {
-  // Turn the feeding stepper motor if a number is given on serial
-  if (Serial.available() > 0) {
-    int n = Serial.parseInt();
-    if (n > 0) {
-      steps(mmToSteps(n));
-    }
-  }
+
 }
 
+
+// =================== FEED FUNCTIONS ======================
 
 // this function automatically gets called upon a matching POST request
 int bend_to_angle(String angle_string) {
@@ -76,13 +73,7 @@ int bend_to_angle(String angle_string) {
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
-    digitalWrite(solenoid_pin, HIGH);
-    delay(500);
     bend_servo.write(angle);
-    delay(1000);
-    digitalWrite(solenoid_pin, LOW);
-    delay(1000);
-    bend_servo.write(98);
     return 1;
   } else {
     Serial.print("Warning: value ");
@@ -106,11 +97,39 @@ int bend_to_angle(String angle_string) {
   // }
 }
 
+
+// =================== FEED FUNCTIONS ======================
+
+// this function automatically gets called upon a matching POST request
 int feed_mm(String mm_string) {
   // Convert the string angle_string to an integer
   int mm = mm_string.toInt();
   steps(mmToSteps(mm));
   return 1;
+}
+
+
+// ================== SOLENOID FUNCTIONS ====================
+
+// this function automatically gets called upon a matching POST request
+int soleniod_state(String binary_string) {
+  int binary = binary_string.toInt();
+  switch (binary) {
+    case 0:
+      disengage_solenoid();
+      break;
+    case 1:
+      engage_solenoid();
+      break;
+  }
+}
+
+void engage_solenoid() {
+  digitalWrite(solenoid_pin, HIGH);
+}
+
+void disengage_solenoid() {
+  digitalWrite(solenoid_pin, LOW);
 }
 
 // Converts mm to steps given the MM_PER_STEP value (there is some implicit
