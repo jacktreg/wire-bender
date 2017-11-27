@@ -6,10 +6,11 @@
   </head>
 
   <body>
+    <p>Upload a data file:</p>
+    <input type="file" id="file" />
     <form id="file_form" action='https://api.particle.io/v1/devices/340029001047363330363431/process?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed'>
-      <p>Upload a data file:</p>
-      <input type="file" id="file" />
-      <input type='submit' id="file_submit" value='Submit'/>
+      <textarea id="file_contents" rows=10 cols=50></textarea>
+      <input type='submit' value='Submit'/>
     </form>
     <form id="bend_form" action='https://api.particle.io/v1/devices/340029001047363330363431/bend?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed' method="post">
       <p>Insert the angle you'd like to bend to!</p>
