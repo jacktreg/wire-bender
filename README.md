@@ -6,7 +6,9 @@ A Particle project named WireBender
 - cd into /WireBender or whatever you named your top level project directory
 - If you don't have node.js and NPM installed, visit http://blog.teamtreehouse.com/install-node-js-npm-mac to get those set up.
 - Once you have node.js and NPM installed, type ```npm install paper```
-- The files that use paper.js expect it to be located where the above command will install them, so that should be it! Try visiting drawing_form.html to see if it works properly.
+- ```paper.js``` make Cross-Origin requests, so the scripts can't run properly unless you run the project on a local server. I've found this one incredibly simple to set up and use https://www.npmjs.com/package/http-server
+- However you decide to serve the code, run the server!
+- You should be able to draw now! Try visiting localhost:[your_port]/drawing_form.html to see if it works properly.
 
 ## Welcome to your project!
 
