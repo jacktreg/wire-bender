@@ -1,3 +1,5 @@
  *.bin
 .DS_store
-/node_modules/*
+/node_modules
+/node_modules/paper
+/node_modules/paper/*
