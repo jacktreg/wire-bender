@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link rel="stylesheet" type="text/css" href="assets/styles/drawing.css"/>
-<!-- Load the Paper.js library -->
-<script type="text/javascript" src="node_modules/paper/dist/paper-full.js"></script>
-<!-- Define inlined PaperScript associate it with myCanvas -->
-<script type="text/paperscript" canvas="myCanvas" src="assets/scripts/drawing.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/styles/drawing.css" />
+	<!-- Load the Paper.js library -->
+	<script type="text/javascript" src="node_modules/paper/dist/paper-full.js"></script>
+	<!-- Define inlined PaperScript associate it with myCanvas -->
+	<script type="text/paperscript" canvas="myCanvas" src="assets/scripts/drawing.js"></script>
 </head>
+
 <body>
-	<canvas id="myCanvas" ></canvas>
+	<canvas id="myCanvas"></canvas>
+	<div id="button-container">
+		<div class="drawing-button" id="clear-button">
+			Clear
+		</div>
+		<div class="drawing-button" id="submit-button">
+			Bend It!
+		</div>
+	</div>
 </body>
+
 </html>
