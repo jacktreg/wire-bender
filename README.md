@@ -2,6 +2,11 @@
 
 A Particle project named WireBender
 
+#### Set up ```paper.js```:
+- cd into /WireBender or whatever you named your top level project directory
+- If you don't have node.js and NPM installed, visit https://github.com/paperjs/paper.js/blob/develop/README.md#installing-nodejs-and-npm to get those set up.
+- Once you have node.js and NPM installed, type ```npm install paper```
+
 ## Welcome to your project!
 
 Every new Particle project is composed of 3 important elements that you'll see have been created in your project directory for WireBender.
