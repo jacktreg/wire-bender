@@ -13,7 +13,16 @@
 
 <body>
 	<canvas id="myCanvas"></canvas>
-	<div id="button-container">
+
+	<div id="tool-container">
+		<div class="input-container">
+			Pixels:
+			<input id="pixel-input" value="1"/>
+			<font size="5">:</font> 1mm
+			<div class="total-length-container">
+				Total Length: <span id="total-length-span">0</span>mm
+			</div>
+		</div>
 		<div class="drawing-button" id="clear-button">
 			Clear
 		</div>
