@@ -55,7 +55,8 @@ function pixelsToMM(p) {
 
 // Gets the angle b/t two vectors v1, v2 in degrees
 function getAngle(v1, v2) {
-  return Math.round(-1 * Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958);
+  var angle = Math.round(-1 * Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958);
+  return angle < 0 ? Math.max(angle,-90) : Math.min(angle, 90);
 }
 
 // Gets the dot product b/t two vectors v1, v2
@@ -95,6 +96,12 @@ function computeInstructions(segments) {
     // Move the solenoid away from the wire a tad
     angle = angle > 0 ? angle - 5 : angle + 5;
     result += "b " + angle + "\n";
+    if (i == segments.length - 3) {
+      // Set the solenoid in down position
+      result += "s 0\n";
+      // Extrude the length of the last path
+      result += "f " + pixelsToMM(next_segment.length) + "\n";
+    }
   }
   // End the job by putting the solenoid in the down position
   return result + "s 0";
