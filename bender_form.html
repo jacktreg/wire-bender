@@ -6,13 +6,17 @@
   </head>
 
   <body>
+    <p>Access Token: </p>
+    <input type="text" id="access_token" value="5e0e6be5b2056f3974518bfe8fb25b641547e7dd"/>
+    <p>Device ID:</p>
+    <input type="text" id="device_id" value="330044001047363330363431" />
     <p>Upload a data file:</p>
     <input type="file" id="file" />
     <form id="file_form" action='https://api.particle.io/v1/devices/340029001047363330363431/process?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed'>
       <textarea id="file_contents" rows=10 cols=50 name='args'></textarea>
       <input type='submit' value='Submit'/>
     </form>
-    <form id="bend_form" action='https://api.particle.io/v1/devices/340029001047363330363431/bend?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed' method="post">
+    <form id="bend_form">
       <p>Insert the angle you'd like to bend to!</p>
       <input type='text' name='args'>
       <input type='submit' value='Submit'>

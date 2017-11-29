@@ -8,6 +8,7 @@ function processContent(content){
     }
   });
   $("#file_contents").val(data.join(",") + ",");
+  console.log(data.join(",") + ",")
 }
 
 function processFile(event) {
@@ -34,8 +35,11 @@ $( document ).ready(function() {
   $('#file_form').on('submit', function(event) {
       event.preventDefault();
       var $form = $(this);
+      var device_id = $("#device_id").val()
+      var access_token = $("#access_token").val()
+      var url = 'https://api.particle.io/v1/devices/'+device_id+'/process?access_token='+access_token
       $.post({
-        url: $form.attr('action'),
+        url: url,
         data: $form.serialize(),
         success: function(data, status, xhr) {
           console.log(data);
@@ -47,8 +51,11 @@ $( document ).ready(function() {
   $('#bend_form').on('submit', function(event) {
       event.preventDefault();
       var $form = $(this);
+      var device_id = $("#device_id").val()
+      var access_token = $("#access_token").val()
+      var url = 'https://api.particle.io/v1/devices/'+device_id+'/bend?access_token='+access_token
       $.post({
-        url: $form.attr('action'),
+        url: url,
         data: $form.serialize(),
         success: function(data, status, xhr) {
           console.log(data);
@@ -59,8 +66,11 @@ $( document ).ready(function() {
   $('#feed_form').on('submit', function(event) {
       event.preventDefault();
       var $form = $(this);
+      var device_id = $("#device_id").val()
+      var access_token = $("#access_token").val()
+      var url = 'https://api.particle.io/v1/devices/'+device_id+'/feed?access_token='+access_token
       $.post({
-        url: $form.attr('action'),
+        url: url,
         data: $form.serialize(),
         success: function(data, status, xhr) {
           console.log(data);
@@ -71,8 +81,11 @@ $( document ).ready(function() {
   $('#solenoid_form').on('submit', function(event) {
       event.preventDefault();
       var $form = $(this);
+      var device_id = $("#device_id").val()
+      var access_token = $("#access_token").val()
+      var url = 'https://api.particle.io/v1/devices/'+device_id+'/solenoid?access_token='+access_token
       $.post({
-        url: $form.attr('action'),
+        url: url,
         data: $form.serialize(),
         success: function(data, status, xhr) {
           console.log(data);
