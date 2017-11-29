@@ -1,7 +1,5 @@
 # WireBender
 
-A Particle project named WireBender
-
 #### Set up ```paper.js```:
 - cd into /WireBender or whatever you named your top level project directory
 - If you don't have node.js and NPM installed, visit http://blog.teamtreehouse.com/install-node-js-npm-mac to get those set up.
