@@ -29,7 +29,7 @@ canvas {
   height: 100%;
   width: 10%;
 
-  border-style: solid;
+  border-style: outset;
   border: 0.5px 0.5px 0.5px 0.5px;
   border-radius: 10px;
   border-color: rgb(204, 204, 204);
@@ -42,6 +42,12 @@ canvas {
 .drawing-button:hover {
   background-color: rgb(211, 237, 251);
 }
+
+.drawing-button:active {
+  border-style: inset;
+}
+
+
 
 #clear-button {
   margin-left: 38%;

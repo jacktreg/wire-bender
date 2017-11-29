@@ -37,3 +37,15 @@ function onMouseUp(event) {
 	var difference = segmentCount - newSegmentCount;
 	var percentage = 100 - Math.round(newSegmentCount / segmentCount * 100);
 }
+
+$(document).ready(function() {
+  $('#clear-button').on('mouseup', function(event) {
+		path = null;
+		paper.project.clear();
+		paper.project.activate();
+  });
+
+	$('#submit-button').on('mouseup', function(event) {
+      console.log("bending the drawing!");
+  });
+});
