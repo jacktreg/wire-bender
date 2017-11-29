@@ -32,20 +32,33 @@ function onMouseUp(event) {
 
   // Select the path, so we can see its segments:
   path.fullySelected = true;
-
+  // Display the total length of the drawing in mm
+	updateTotalLength();
   var newSegmentCount = path.segments.length;
   var difference = segmentCount - newSegmentCount;
   var percentage = 100 - Math.round(newSegmentCount / segmentCount * 100);
 }
 
+function updateTotalLength() {
+	if (path) {
+		$("#total-length-span").html(pixelsToMM(path.length));
+	} else {
+		$("#total-length-span").html(0);
+	}
+}
+
+// Mapping from screen pixels to mm
 function pixelsToMM(p) {
-  return p;
+  // Round to at most 2 decimal places
+  return Math.round(p / $("#pixel-input").val() * 100) / 100;
 }
 
+// Gets the angle b/t two vectors v1, v2 in degrees
 function getAngle(v1, v2) {
-  return Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958;
+  return Math.round(-1 * Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958);
 }
 
+// Gets the dot product b/t two vectors v1, v2
 function dot(v1, v2) {
   var result = v1 * v2;
   return result.x + result.y;
@@ -89,17 +102,23 @@ $(document).ready(function() {
     path = null;
     paper.project.clear();
     paper.project.activate();
+		updateTotalLength();
+    $("#file_contents").val("");
   });
 
   $('#submit-button').on('mouseup', function(event) {
-    console.log(path);
-
-    if (path._segments.length >= 3) {
+    if (path && path._segments.length >= 3) {
       rectifyPath(path);
       console.log("Instructions: ");
       console.log(computeInstructions(path._segments));
+      processContent(computeInstructions(path._segments));
+      $("#file_form").submit();
     } else {
       console.log("Not enough segments in the drawn path!");
     }
   });
+
+	$("#pixel-input").on('input', function(event) {
+		updateTotalLength();
+	});
 });
