@@ -16,6 +16,10 @@ canvas {
   border-color: rgb(204, 204, 204);
 }
 
+canvas:hover {
+  cursor: pointer;
+}
+
 #button-container {
   display: block;
   position: relative;
@@ -37,10 +41,13 @@ canvas {
   text-align: center;
   vertical-align: middle;
   line-height: 40px;
+
+  user-select: none;
 }
 
 .drawing-button:hover {
   background-color: rgb(211, 237, 251);
+  cursor: pointer;
 }
 
 .drawing-button:active {
