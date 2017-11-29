@@ -92,6 +92,9 @@ function computeInstructions(segments) {
     result += "s 1\n";
     // Move solenoid to angle b/t segments
     result += "b " + angle + "\n";
+    // Move the solenoid away from the wire a tad
+    angle = angle > 0 ? angle - 5 : angle + 5;
+    result += "b " + angle + "\n";
   }
   // End the job by putting the solenoid in the down position
   return result + "s 0";
