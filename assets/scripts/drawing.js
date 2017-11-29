@@ -43,7 +43,7 @@ function pixelsToMM(p) {
 }
 
 function getAngle(v1, v2) {
-	return Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958;
+	return Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958;
 }
 
 function dot(v1, v2) {
@@ -53,15 +53,11 @@ function dot(v1, v2) {
 
 function rectifyPath(_path) {
   // TODO: Make this actually rectify the path, lol
-	if (_path._segments.length < 3 ) {
-
-	} else {
-		for (var i=0; i<_path._segments.length-2; i++) {
-			var current_segment = _path._segments[i+1]._point - _path._segments[i]._point
-			var next_segment = _path._segments[i+2]._point - _path._segments[i+1]._point
-      // Make sure the angle isn't bigger than 90 degs
-			var angle = getAngle(current_segment, next_segment);
-		}
+	for (var i=0; i<_path._segments.length-2; i++) {
+		var current_segment = _path._segments[i+1]._point - _path._segments[i]._point
+		var next_segment = _path._segments[i+2]._point - _path._segments[i+1]._point
+    // Make sure the angle isn't bigger than 90 degs
+		var angle = getAngle(current_segment, next_segment);
 	}
 }
 
@@ -71,18 +67,21 @@ function computeInstructions(segments) {
 		var current_segment = segments[i+1]._point - segments[i]._point
 		var next_segment = segments[i+2]._point - segments[i+1]._point
 		var angle = getAngle(current_segment, next_segment);
+    // Find the proper solenoid initialization angle
+		var s_init = angle > 0 ? -5 : 5;
 		// Set the solenoid in down position
 		result += "s 0\n";
 		// Extrude the length of the path
 		result += "f " + pixelsToMM(current_segment.length) +"\n";
 		// Set the solenoid on the correct side (given angle direction)
-		result += "TODO\n";
+		result += "b " + s_init + "\n";
 		// Set the solenoid in up position
 		result += "s 1\n";
 		// Move solenoid to angle b/t segments
-		result += "TODO\n";
+		result += "b " + angle + "\n";
 	}
-	return result;
+  // End the job by putting the solenoid in the down position
+	return result + "s 0";
 }
 
 $(document).ready(function() {
@@ -97,6 +96,7 @@ $(document).ready(function() {
 
 		if (path._segments.length >= 3) {
 			rectifyPath(path);
+			console.log("Instructions: ");
 			console.log(computeInstructions(path._segments));
 		} else {
 			console.log("Not enough segments in the drawn path!");
