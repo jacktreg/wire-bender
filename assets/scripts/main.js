@@ -27,7 +27,9 @@ function processFile(event) {
 }
 
 $( document ).ready(function() {
-  document.getElementById('file').addEventListener('change', processFile)
+  if (document.getElementById('file') ) {
+    document.getElementById('file').addEventListener('change', processFile)
+  }
 
   $('#file_form').on('submit', function(event) {
       event.preventDefault();

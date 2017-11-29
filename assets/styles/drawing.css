@@ -81,3 +81,7 @@ canvas:hover {
 #submit-button {
   margin-left: 2%;
 }
+
+#drawing-form-container {
+  display: none;
+}

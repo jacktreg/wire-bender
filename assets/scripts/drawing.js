@@ -55,7 +55,7 @@ function pixelsToMM(p) {
 
 // Gets the angle b/t two vectors v1, v2 in degrees
 function getAngle(v1, v2) {
-  return Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958;
+  return Math.round(-1 * Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958);
 }
 
 // Gets the dot product b/t two vectors v1, v2
@@ -110,6 +110,8 @@ $(document).ready(function() {
       rectifyPath(path);
       console.log("Instructions: ");
       console.log(computeInstructions(path._segments));
+      processContent(computeInstructions(path._segments));
+      $("#file_form").submit();
     } else {
       console.log("Not enough segments in the drawn path!");
     }
@@ -117,5 +119,5 @@ $(document).ready(function() {
 
 	$("#pixel-input").on('input', function(event) {
 		updateTotalLength();
-	})
+	});
 });

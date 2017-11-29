@@ -9,6 +9,8 @@
 	<script type="text/javascript" src="node_modules/paper/dist/paper-full.js"></script>
 	<!-- Define inlined PaperScript associate it with myCanvas -->
 	<script type="text/paperscript" canvas="myCanvas" src="assets/scripts/drawing.js"></script>
+	<!--  Include main.js -->
+	<script type="text/javascript" src="assets/scripts/main.js"></script>
 </head>
 
 <body>
@@ -30,6 +32,14 @@
 			Bend It!
 		</div>
 	</div>
+
+	<div id="drawing-form-container">
+		<form id="file_form" action='https://api.particle.io/v1/devices/340029001047363330363431/process?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed'>
+			<textarea id="file_contents" rows=10 cols=50 name='args'></textarea>
+			<input type='submit' value='Submit'/>
+		</form>
+	</div>
+
 </body>
 
 </html>
