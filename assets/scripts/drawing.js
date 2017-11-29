@@ -103,6 +103,7 @@ $(document).ready(function() {
     paper.project.clear();
     paper.project.activate();
 		updateTotalLength();
+    $("#file_contents").val("");
   });
 
   $('#submit-button').on('mouseup', function(event) {
