@@ -81,7 +81,7 @@ function computeInstructions(segments) {
     var next_segment = segments[i + 2]._point - segments[i + 1]._point
     var angle = getAngle(current_segment, next_segment);
     // Find the proper solenoid initialization angle
-    var s_init = angle > 0 ? -5 : 5;
+    var s_init = angle > 0 ? -10 : 10;
     // Set the solenoid in down position
     result += "s 0\n";
     // Extrude the length of the path
@@ -93,7 +93,7 @@ function computeInstructions(segments) {
     // Move solenoid to angle b/t segments
     result += "b " + angle + "\n";
     // Move the solenoid away from the wire a tad
-    angle = angle > 0 ? angle - 5 : angle + 5;
+    angle = angle > 0 ? angle - 20 : angle + 20;
     result += "b " + angle + "\n";
   }
   // End the job by putting the solenoid in the down position

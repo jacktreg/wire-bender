@@ -70,13 +70,14 @@ void loop() {
 }
 
 int process_instructions(String instructions) {
-  while (instructions != ""){
+  while ((String)instructions != (String)""){
     int i = instructions.indexOf(",");
     String command = instructions.substring(0,i);
     String action = command.substring(0,1);
     String value = command.substring(1);
     Serial.println("Action: " + action);
     Serial.println("Value: " + value);
+    Serial.println("Instructions: " + instructions);
     Serial.println("-----");
 
     char char_action = action[0];
