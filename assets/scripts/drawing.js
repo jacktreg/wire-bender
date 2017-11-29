@@ -106,9 +106,7 @@ $(document).ready(function() {
   });
 
   $('#submit-button').on('mouseup', function(event) {
-    console.log(path);
-
-    if (path._segments.length >= 3) {
+    if (path && path._segments.length >= 3) {
       rectifyPath(path);
       console.log("Instructions: ");
       console.log(computeInstructions(path._segments));
