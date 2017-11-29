@@ -34,7 +34,7 @@ canvas:hover {
 
 .input-container {
   display: inline-block;
-  margin-left: 20%;
+  margin-left: 32%;
 }
 
 .total-length-container {
@@ -59,7 +59,7 @@ canvas:hover {
 
   height: 40px;
   position: relative;
-  top: -8px;
+  top: -10px;
 }
 
 .drawing-button:hover {
