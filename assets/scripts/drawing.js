@@ -118,10 +118,11 @@ $(document).ready(function() {
 
   $('#submit-button').on('mouseup', function(event) {
     if (path && path._segments.length >= 3) {
-      rectifyPath(path);
+      // rectifyPath(path);
       console.log("Instructions: ");
-      console.log(computeInstructions(path._segments));
-      processContent(computeInstructions(path._segments));
+      var instr = computeInstructions(path._segments);
+      console.log(instr);
+      processContent(instr);
       $("#file_form").submit();
     } else {
       console.log("Not enough segments in the drawn path!");
