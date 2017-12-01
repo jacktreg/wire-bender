@@ -34,7 +34,7 @@ canvas:hover {
 
 .input-container {
   display: inline-block;
-  margin-left: 32%;
+  margin-left: 25%;
 }
 
 .total-length-container {
@@ -71,14 +71,17 @@ canvas:hover {
   border-style: inset;
 }
 
-
+.selected-tool {
+  background-color: rgb(211, 237, 251);
+  border-style: inset;
+}
 
 #clear-button {
   margin-left: 2%;
   display: inline-block;
 }
 
-#submit-button {
+#vector-button {
   margin-left: 2%;
 }
 

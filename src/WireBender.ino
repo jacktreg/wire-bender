@@ -181,9 +181,7 @@ void avgError() {
 void steps(int number_of_steps) {
   bool move_forward = true;
   // Establishing the direction
-  if (number_of_steps >= 0) {
-    move_forward = true;
-  } else {
+  if (number_of_steps < 0) {
     move_forward = false;
     number_of_steps = -number_of_steps;
   }
