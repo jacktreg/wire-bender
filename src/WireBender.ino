@@ -12,9 +12,10 @@ Servo bend_servo;
 int process_instructions(String instructions);
 int bend_to_angle(String angle_string);
 int feed_mm(String mm_string);
+int rotate(String steps);
 int soleniod_state(String binary_string);
 // Pin to control the servo
-const int servo_pin = D0;
+const int servo_pin = D1;
 // Maximum angle the bending servo can go
 const int MAX_ANGLE = 90;
 // Minimum angle the bending servo can go
@@ -26,11 +27,15 @@ const int MIN_ANGLE = -90;
 // The angle of the server that is directly below the wire.
 const int SERVO_HOME = 94;
 // Pin to control the solenoid
-const int solenoid_pin = D1;
+const int solenoid_pin = D0;
 // Step pin for stepper motor
-const int step_pin = D2;
+const int step_pin = D4;
 // Direction pin for stepper motor
-const int direction_pin = D3;
+const int direction_pin = D5;
+// Step pin for stepper motor
+const int rot_step_pin = D2;
+// Direction pin for stepper motor
+const int rot_direction_pin = D3;
 // Steps for 360 degree stepper turn
 const int STEPS_PER_TURN = 200;
 // Minimum delay between steps in microseconds
@@ -56,6 +61,7 @@ void setup() {
   Particle.function("process", process_instructions);
   Particle.function("bend", bend_to_angle);
   Particle.function("feed", feed_mm);
+  Particle.function("rotate", rotate);
   Particle.function("solenoid", soleniod_state);
   // Init the serial port
   Serial.begin(9600);
@@ -63,6 +69,8 @@ void setup() {
   pinMode(step_pin, OUTPUT);
   pinMode(solenoid_pin, OUTPUT);
   pinMode(direction_pin, OUTPUT);
+  pinMode(rot_step_pin, OUTPUT);
+  pinMode(rot_direction_pin, OUTPUT);
 }
 
 void loop() {
@@ -139,7 +147,7 @@ int bend_to_angle(String angle_string) {
 int feed_mm(String mm_string) {
   // Convert the string angle_string to an integer
   int mm = mm_string.toInt();
-  steps(mmToSteps(mm));
+  steps(step_pin,direction_pin,mmToSteps(mm));
   return 1;
 }
 
@@ -178,7 +186,7 @@ void avgError() {
 
 // Steps the stepper motor number_of_steps steps. If number_of_steps < 0 the
 // motor will rotate in the opposite direction.
-void steps(int number_of_steps) {
+void steps(int step_pin, int direction_pin, int number_of_steps) {
   bool move_forward = true;
   // Establishing the direction
   if (number_of_steps >= 0) {
@@ -189,13 +197,13 @@ void steps(int number_of_steps) {
   }
   // Generating the steps
   for (int i = 0; i < number_of_steps; i++) {
-    step(move_forward);
+    step(step_pin,direction_pin,move_forward);
     delayMicroseconds(STEP_DELAY);
   }
 }
 
 // Steps the stepper motor a single step either forward or backward
-void step(bool forward) {
+void step(int step_pin, int direction_pin, bool forward) {
   // setting the direction
   if (forward == true) {
     digitalWrite(direction_pin, HIGH);
@@ -208,6 +216,11 @@ void step(bool forward) {
   digitalWrite(step_pin, LOW);
 }
 
+// ================== ROTATING STEPPER FUNCTIONS ======================
+int rotate(String num_steps) {
+  steps(rot_step_pin,rot_direction_pin, num_steps.toInt());
+  return 1;
+}
 
 // ================== SOLENOID FUNCTIONS ====================
 
