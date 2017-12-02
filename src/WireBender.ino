@@ -147,7 +147,7 @@ int bend_to_angle(String angle_string) {
 int feed_mm(String mm_string) {
   // Convert the string angle_string to an integer
   int mm = mm_string.toInt();
-  steps(step_pin,direction_pin,mmToSteps(mm));
+  steps(step_pin,direction_pin,-1*mmToSteps(mm));
   return 1;
 }
 
