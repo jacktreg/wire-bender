@@ -116,7 +116,7 @@ function computeInstructions(segments) {
     // Move solenoid to angle b/t segments
     result += "b " + angle + "\n";
     // Move the solenoid away from the wire a tad
-    angle = angle > 0 ? angle - 40 : angle + 40;
+    angle = angle > 0 ? angle - 33 : angle + 33;
     result += "b " + angle + "\n";
     if (i == segments.length - 3) {
       // Set the solenoid in down position
