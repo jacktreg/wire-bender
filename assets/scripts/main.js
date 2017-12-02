@@ -39,7 +39,6 @@ function submitDrawing(content) {
     $("#file_contents").val(chunked_data[i]);
     $("#file_form").submit();
   }
-
 }
 
 function processFile(event) {
