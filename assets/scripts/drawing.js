@@ -134,7 +134,7 @@ $(document).ready(function() {
     $("#file_contents").val("");
   });
 
-  $('#submit-button').on('mouseup', function(event) {
+  $('#bend-button').on('mouseup', function(event) {
     if (path && path._segments.length >= 3) {
       // rectifyPath(path);
       console.log("Instructions: ");
