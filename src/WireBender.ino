@@ -10,6 +10,7 @@ Servo bend_servo;
 // Init cloud functions
 // Cloud functions must return int and take one Stringint
 int process_instructions(String instructions);
+int preset_instructions(String instructions);
 int bend_to_angle(String angle_string);
 int feed_mm(String mm_string);
 int rotate(String steps);
@@ -59,6 +60,7 @@ void setup() {
   // Register the clouds function with a name and with the function
   // (Name of function, function call)
   Particle.function("process", process_instructions);
+  Particle.function("preset", preset_instructions);
   Particle.function("bend", bend_to_angle);
   Particle.function("feed", feed_mm);
   Particle.function("rotate", rotate);
@@ -106,6 +108,15 @@ int process_instructions(String instructions) {
     instructions = instructions.substring(i+1);
   }
   return 1;
+}
+
+int preset_instructions(String instructions) {
+  if (instructions == "squares") {
+    instructions = "s1,s0,";
+  } else if (instructions == "glasses") {
+    instructions = "s1,s0,s1,s0,";
+  }
+  return process_instructions(instructions);
 }
 
 // =================== FEED FUNCTIONS ======================
@@ -216,7 +227,10 @@ void step(int step_pin, int direction_pin, bool forward) {
 
 // ================== ROTATING STEPPER FUNCTIONS ======================
 int rotate(String num_steps) {
-  steps(rot_step_pin,rot_direction_pin, num_steps.toInt());
+
+  int num = num_steps.toInt();
+  num = num * ( (11*200) / 3 ) / 360;
+  steps(rot_step_pin,rot_direction_pin, num);
   return 1;
 }
 

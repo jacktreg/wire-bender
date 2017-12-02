@@ -26,8 +26,12 @@
   	</div>
     <div id='canvas-wrapper'><canvas id="drawing-canvas" resize></canvas></div>
     <div id="drawing-form-container">
-  		<form id="file_form" action='https://api.particle.io/v1/devices/330044001047363330363431/process?access_token=5e0e6be5b2056f3974518bfe8fb25b641547e7dd'>
+  		<form id="file_form">
   			<textarea id="file_contents" rows=10 cols=50 name='args'></textarea>
+  			<input type='submit' value='Submit'/>
+  		</form>
+      <form id="preset-form">
+  			<input type='text' id="preset-contents" name='args'/>
   			<input type='submit' value='Submit'/>
   		</form>
   	</div>
@@ -35,16 +39,16 @@
 
   <div id='button-container'>
     <div class='button-wrapper'>
-      <div class='header-text'>or bend me a...</div>
-      <button class='blue'>CIRCLE</button>
-      <button class='purple'>SQUARE</button>
-      <button class='red'>SQUARE</button>
-      <button class='green'>CIRCLE</button>
+      <div class='header-text'>or bend me...</div>
+      <button class='blue preset-button' id='squares-button' data-instructions="squares">SQUARES</button>
+      <button class='purple preset-button' id='glasses-button' data-instructions="glasses">GLASSES</button>
+      <button class='red preset-button' id='' data-instructions="">SQUARE</button>
+      <button class='green preset-button' data-instructions="">CIRCLE</button>
     </div>
     <div class="setting-input"><p class="total-length-container">Total Length: <span id="total-length-span">0</span>mm</p></div>
     <div class="setting-input"><p>Pixels:</p><div class='input-wrapper min-width'><input id="pixel-input" value="5"/></div><p>:1mm</p></div>
-    <div class='setting-input'><p>Token: </p><div class='input-wrapper strech'><input type="text" id="access_token" value="5e0e6be5b2056f3974518bfe8fb25b641547e7dd"/></div></div>
-  	<div class='setting-input'><p>Device ID:</p><div class='input-wrapper strech'><input type="text" id="device_id" value="330044001047363330363431" /></div></div>
+    <div class='setting-input'><p>Token: </p><div class='input-wrapper strech'><input type="text" id="access_token" value="6540b809489631391e384f45ef05285240b7ebc2"/></div></div>
+  	<div class='setting-input'><p>Device ID:</p><div class='input-wrapper strech'><input type="text" id="device_id" value="340029001047363330363431" /></div></div>
     <a href='/bender_form.html'>Developer Tools</a>
   </div>
 
