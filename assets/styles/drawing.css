@@ -1,40 +1,158 @@
 html,
 body {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: rgba(0,0,10,0.03);
+}
+* {
+  box-sizing: border-box;
 }
 
+#drawing-container {
+  position: absolute;
+  left:0;
+  right:400px;
+  top:0;
+  height: 100%;
+}
+#canvas-wrapper {
+  position: absolute;
+  left:20px;
+  right:20px;
+  top:80px;
+  bottom: 20px;
+}
 canvas {
-  display: block;
-  height: 85%;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-
-  border-style: ridge;
-  border: 1px 1px 1px 1px;
-  border-color: rgb(204, 204, 204);
+  height: 100%;
+  width:100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,15,0.05), 0 4px 4px rgba(0,0,15,0.07);
 }
-
 canvas:hover {
   cursor: pointer;
 }
 
-#tool-container {
+#button-container {
+  position: absolute;
+  right: 0;
+  width:400px;
+  top:0;
+  height: 100%;
+  padding:20px 40px 20px 20px;
+  display:flex;
+  flex-direction: column;
+}
+.button-wrapper {
+  flex: 1 1 auto;
+  width:100%;
+}
+.header-text {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+  font-family: sans-serif;
+  margin-top: 6px;
+  margin-bottom: 26px;
+}
+.button-wrapper button {
   display: block;
-  position: relative;
-  top: 10px;
   width: 100%;
-  height: 50px;
+  padding: 20px 20px;
+  text-align: center;
+  border-radius: 6px;
+  box-shadow: 0 10px 20px rgba(0,0,15,0.05), 0 4px 4px rgba(0,0,15,0.07);
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+  font-family: sans-serif;
+  outline:none;
+  border:none;
+  color:white;
 }
-
-#pixel-input {
-  width: 25px;
+.button-wrapper button:hover {
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,15,0.1), 0 4px 4px rgba(0,0,20,0.19);
 }
-
+.button-wrapper button.purple {
+  background-color: #b700ff;
+}
+.button-wrapper button.red {
+  background-color: #ff1d45;
+}
+.button-wrapper button.blue {
+  background-color: #5600da;
+}
+.button-wrapper button.green {
+  background-color: #ffb11c;
+}
+.setting-input {
+  width:100%;
+  display:flex;
+  align-items: center;
+  min-height: 47px;
+}
+.setting-input p {
+  font-size: 15px;
+  font-weight: 400;
+  font-family: sans-serif;
+  color:rgba(0,0,0,0.6);
+  margin-right: 8px;
+}
+.setting-input .input-wrapper.strech {
+  flex: 1 1 auto;
+}
+.setting-input .input-wrapper.min-width {
+  width: 40px;
+  margin-right: 3px;
+}
+.setting-input .input-wrapper.min-width input {
+  text-align: center;
+}
+.setting-input .input-wrapper input {
+  width:100%;
+  padding: 7px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.2);
+  color:rgba(0,0,0,0.5);
+}
+#button-container a {
+  color:#2243B6 !important;
+  text-align: right;
+  text-decoration: none;
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: sans-serif;
+}
+#button-container a:hover {
+  text-decoration: underline;
+}
+#tool-container {
+  position: absolute;
+  top:0;
+  height:80px;
+  left:0;
+  width:100%;
+  display:flex;
+  align-items: center;
+  padding: 20px;
+}
+#tool-container .spacer {
+  flex: 1 1 auto;
+}
 .input-container {
   display: inline-block;
-  margin-left: 25%;
+  flex: 1 1 auto;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: sans-serif;
+  color: rgb(0,0,0,0.7);
 }
 
 .total-length-container {
@@ -43,46 +161,49 @@ canvas:hover {
 
 .drawing-button {
   display: inline-block;
-  height: 100%;
-  width: 10%;
-
-  border-style: outset;
-  border: 0.5px 0.5px 0.5px 0.5px;
-  border-radius: 10px;
-  border-color: rgb(204, 204, 204);
-
+  border:none;
+  outline: none;
   text-align: center;
-  vertical-align: middle;
-  line-height: 40px;
-
-  user-select: none;
-
-  height: 40px;
-  position: relative;
-  top: -10px;
+  padding: 10px 25px;
+  margin-left:10px;
+  border-radius: 5px;
+  color:white;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: sans-serif;
+  box-shadow: 0 10px 20px rgba(0,0,15,0.05), 0 4px 4px rgba(0,0,15,0.07);
 }
-
+#clear-button {
+  margin-left: 40px;
+  background-color: #ff1d45;
+}
+#bend-button {
+  background-color: #37e600;
+}
 .drawing-button:hover {
-  background-color: rgb(211, 237, 251);
+  box-shadow: 0 10px 20px rgba(0,0,15,0.1), 0 4px 4px rgba(0,0,20,0.19);
   cursor: pointer;
 }
 
-.drawing-button:active {
-  border-style: inset;
-}
-
-.selected-tool {
-  background-color: rgb(211, 237, 251);
-  border-style: inset;
-}
-
-#clear-button {
-  margin-left: 2%;
+.drawing-tool {
   display: inline-block;
+  border:none;
+  outline: none;
+  text-align: center;
+  padding: 10px 15px;
+  margin-left:10px;
+  border-radius: 5px;
+  color:black;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: sans-serif;
 }
-
-#vector-button {
-  margin-left: 2%;
+.drawing-tool:hover {
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.05);
+}
+.drawing-tool.selected-tool {
+  background-color: rgba(0,0,0,0.15) !important;
 }
 
 #drawing-form-container {

@@ -10,6 +10,7 @@ Servo bend_servo;
 // Init cloud functions
 // Cloud functions must return int and take one Stringint
 int process_instructions(String instructions);
+int preset_instructions(String instructions);
 int bend_to_angle(String angle_string);
 int feed_mm(String mm_string);
 int rotate(String num_steps);
@@ -59,6 +60,7 @@ void setup() {
   // Register the clouds function with a name and with the function
   // (Name of function, function call)
   Particle.function("process", process_instructions);
+  Particle.function("preset", preset_instructions);
   Particle.function("bend", bend_to_angle);
   Particle.function("feed", feed_mm);
   Particle.function("rotate", rotate);
@@ -100,12 +102,21 @@ int process_instructions(String instructions) {
         break;
       case 's':
         soleniod_state(value);
-        delay(100);
+        delay(200);
         break;
     }
     instructions = instructions.substring(i+1);
   }
   return 1;
+}
+
+int preset_instructions(String instructions) {
+  if (instructions == "squares") {
+    instructions = "s1,s0,";
+  } else if (instructions == "glasses") {
+    instructions = "s1,s0,s1,s0,";
+  }
+  return process_instructions(instructions);
 }
 
 // =================== FEED FUNCTIONS ======================
@@ -116,7 +127,11 @@ int bend_to_angle(String angle_string) {
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
+<<<<<<< HEAD
     int servo_angle = map(angle, 90, -90, 21, 158);
+=======
+    int servo_angle = map(angle, 90, -91, 21, 167);
+>>>>>>> 8064e80e38907fd07323f9f65a620f037eec018a
     bend_servo.write(servo_angle);
     return 1;
   } else {
@@ -146,8 +161,13 @@ int bend_to_angle(String angle_string) {
 // this function automatically gets called upon a matching POST request
 int feed_mm(String mm_string) {
   // Convert the string angle_string to an integer
+<<<<<<< HEAD
   int mm = -1 * mm_string.toInt();
   steps(step_pin,direction_pin,mmToSteps(mm));
+=======
+  int mm = mm_string.toInt();
+  steps(step_pin,direction_pin,-1*mmToSteps(mm));
+>>>>>>> 8064e80e38907fd07323f9f65a620f037eec018a
   return 1;
 }
 
@@ -218,7 +238,10 @@ void step(int step_pin, int direction_pin, bool forward) {
 
 // ================== ROTATING STEPPER FUNCTIONS ======================
 int rotate(String num_steps) {
-  steps(rot_step_pin,rot_direction_pin, num_steps.toInt());
+
+  int num = num_steps.toInt();
+  num = num * ( (11*200) / 3 ) / 360;
+  steps(rot_step_pin,rot_direction_pin, num);
   return 1;
 }
 

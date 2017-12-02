@@ -39,7 +39,6 @@ function submitDrawing(content) {
     $("#file_contents").val(chunked_data[i]);
     $("#file_form").submit();
   }
-
 }
 
 function processFile(event) {
@@ -66,9 +65,9 @@ $( document ).ready(function() {
   $('#file_form').on('submit', function(event) {
       event.preventDefault();
       var $form = $(this);
-      var device_id = $("#device_id").val()
-      var access_token = $("#access_token").val()
-      var url = 'https://api.particle.io/v1/devices/'+device_id+'/process?access_token='+access_token
+      var device_id = $("#device_id").val();
+      var access_token = $("#access_token").val();
+      var url = 'https://api.particle.io/v1/devices/' + device_id + '/process?access_token=' + access_token;
       $.post({
         url: url,
         data: $form.serialize(),
