@@ -106,6 +106,7 @@ int process_instructions(String instructions) {
         break;
       case 'r':
         rotate(value);
+        delay(500);
         break;
     }
     instructions = instructions.substring(i+1);
@@ -114,10 +115,10 @@ int process_instructions(String instructions) {
 }
 
 int preset_instructions(String instructions) {
-  if (instructions == "squares") {
-    instructions = "s1,s0,";
+  if (instructions == "cube") {
+    instructions = "b0,f50,b-10,s1,b90,b-10,f50,b90,b-10,f50,b90,b-10,f50,s0,b10,r90,s1,b-90,b10,f50,b-90,r-90,f50,b-10,s1,b90,b-10,f50,b90,b-10,f50,b90,b-10,f50,s0,b0,";
   } else if (instructions == "glasses") {
-    instructions = "s0,f120,b-10,s1,b90,b60,s0,f50,r90,b-10,s1,b90,b60,s0,f40,b-10,s1,b90,b60,s0,f50,b-10,s1,b90,b60,s0,f40,b-10,s1,b90,b60,s0,f120,";
+    instructions = "s0,f120,b-10,s1,b90,b60,s0,f40,r90,b10,s1,b-90,b-60,s0,f50,s0,b10,s1,b-90,b-60";
   }
   return process_instructions(instructions);
 }
@@ -130,11 +131,7 @@ int bend_to_angle(String angle_string) {
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
-<<<<<<< HEAD
     int servo_angle = map(angle, 90, -90, 21, 158);
-=======
-    int servo_angle = map(angle, 90, -91, 21, 167);
->>>>>>> 8064e80e38907fd07323f9f65a620f037eec018a
     bend_servo.write(servo_angle);
     return 1;
   } else {
@@ -164,13 +161,8 @@ int bend_to_angle(String angle_string) {
 // this function automatically gets called upon a matching POST request
 int feed_mm(String mm_string) {
   // Convert the string angle_string to an integer
-<<<<<<< HEAD
-  int mm = -1 * mm_string.toInt();
-  steps(step_pin,direction_pin,mmToSteps(mm));
-=======
   int mm = mm_string.toInt();
   steps(step_pin,direction_pin,-1*mmToSteps(mm));
->>>>>>> 8064e80e38907fd07323f9f65a620f037eec018a
   return 1;
 }
 
