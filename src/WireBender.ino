@@ -119,8 +119,10 @@ int preset_instructions(String instructions) {
     instructions = "b0,f50,b-10,s1,b90,b-10,f50,b90,b-10,f50,b90,b-10,f50,s0,b10,r90,s1,b-90,b10,f50,b-90,s0,r-90,f50,b-10,s1,b90,b-10,f50,b90,b-10,f50,b90,b-10,f50,s0,b0,";
   } else if (instructions == "large_glasses") {
     instructions = "s0,f120,b-10,s1,b90,b60,s0,f40,r90,b10,s1,b-90,b-60,s0,f50,s0,b10,s1,b-60,b-30,s0,f35,s1,b90,b60,s0,f35,s1,b-60,b-30,s0,f50,b10,s1,b-90,b-60,s0,f40,r-90,s1,b90,b60,s0,f120,";
-  } else if (instructions == "small_glasses") {
+  } else if (instructions == "medium_glasses") {
     instructions = "s0,f110,b-10,s1,b90,b60,s0,f38,r90,b10,s1,b-90,b-60,s0,f38,s0,b10,s1,b-60,b-30,s0,f35,s1,b90,b60,s0,f35,s1,b-60,b-30,s0,f38,b10,s1,b-90,b-60,s0,f38,r-90,s1,b90,b60,s0,f110,";
+  } else if (instructions == "small_glasses") {
+    instructions = "s0,f110,b-10,s1,b90,b60,s0,f33,r90,b10,s1,b-90,b-60,s0,f33,s0,b10,s1,b-60,b-30,s0,f33,s1,b90,b60,s0,f33,s1,b-60,b-30,s0,f33,b10,s1,b-90,b-60,s0,f33,r-90,s1,b90,b60,s0,f110,";
   }
   return process_instructions(instructions);
 }
