@@ -54,7 +54,7 @@ function onMouseUp(event) {
   // Select the path, so we can see its segments:
   path.fullySelected = true;
   // Display the total length of the drawing in mm
-	updateTotalLength();
+  updateTotalLength();
 }
 
 function updateTotalLength() {
@@ -68,7 +68,7 @@ function updateTotalLength() {
 // Mapping from screen pixels to mm
 function pixelsToMM(p) {
   // Round to at most 2 decimal places
-  return Math.round(p / $("#pixel-input").val() * 100) / 100;
+  return Math.round(p / $("#pixel-input").val());
 }
 
 // Gets the angle b/t two vectors v1, v2 in degrees
@@ -137,11 +137,8 @@ $(document).ready(function() {
   $('#bend-button').on('mouseup', function(event) {
     if (path && path._segments.length >= 3) {
       // rectifyPath(path);
-      console.log("Instructions: ");
       var instr = computeInstructions(path._segments);
-      console.log(instr);
-      processContent(instr);
-      $("#file_form").submit();
+      submitDrawing(instr);
     } else {
       console.log("Not enough segments in the drawn path!");
     }
@@ -152,7 +149,6 @@ $(document).ready(function() {
 	});
 
   $(".drawing-tool").on('mouseup', function(event) {
-    console.log($(this)[0].id);
     if ($(this)[0].id == "smooth-button") {
       smooth = true;
     } else if ($(this)[0].id == "vector-button") {

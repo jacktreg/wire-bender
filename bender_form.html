@@ -12,7 +12,7 @@
     <input type="text" id="device_id" value="330044001047363330363431" />
     <p>Upload a data file:</p>
     <input type="file" id="file" />
-    <form id="file_form" action='https://api.particle.io/v1/devices/340029001047363330363431/process?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed'>
+    <form id="file_form">
       <textarea id="file_contents" rows=10 cols=50 name='args'></textarea>
       <input type='submit' value='Submit'/>
     </form>
@@ -21,12 +21,17 @@
       <input type='text' name='args'>
       <input type='submit' value='Submit'>
     </form>
-    <form id="feed_form" action='https://api.particle.io/v1/devices/340029001047363330363431/feed?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed' method='POST'>
+    <form id="feed_form">
       <p>Insert the amount you would like to feed (in mm)!</p>
       <input type='text' name='args'>
       <input type='submit' value='Submit'>
     </form>
-    <form id="solenoid_form" action='https://api.particle.io/v1/devices/340029001047363330363431/solenoid?access_token=afa122b5c4f71fadf8235fabb618c418f55915ed' method='POST'>
+    <form id="rotate_form">
+      <p>Insert amount of steps to rotate:</p>
+      <input type='text' name='args'>
+      <input type='submit' value='Submit'>
+    </form>
+    <form id="solenoid_form">
       <p>Choose the state of the soleniod</p>
       <input type='radio' name='args' value='0' checked>Down</br>
       <input type='radio' name='args' value='1'>Up</br>
