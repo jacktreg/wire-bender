@@ -7,8 +7,39 @@ function processContent(content){
       data.push(actions[0] + actions[1]);
     }
   });
+  return data;
+}
+
+function fileToInstructions(content) {
+  data = processContent(content);
   $("#file_contents").val(data.join(",") + ",");
-  console.log(data.join(",") + ",")
+}
+
+function submitDrawing(content) {
+  data = processContent(content)
+  var chunked_data = [];
+  var current_chunk = "";
+  var pushed_last = false;
+  for (var i=0; i<data.length; i++) {
+    if (current_chunk.length + data[i].length + 1 < 63) {
+      current_chunk += data[i] + ",";
+      pushed_last = false;
+    } else {
+      chunked_data.push(current_chunk);
+      current_chunk = data[i] + ",";
+      pushed_last = true;
+    }
+  }
+  if (!pushed_last) {
+    chunked_data.push(current_chunk);
+  }
+  console.log("total chunks: " + chunked_data.length);
+  for (var i=0; i<chunked_data.length; i++) {
+    console.log("bending chunk: " + chunked_data[i]);
+    $("#file_contents").val(chunked_data[i]);
+    $("#file_form").submit();
+  }
+
 }
 
 function processFile(event) {
@@ -22,7 +53,7 @@ function processFile(event) {
       reader.readAsText(file)
     })
     result.then(content => {
-    	processContent(content)
+    	fileToInstructions(content)
     }).catch(error => console.log(error))
   }
 }
@@ -41,6 +72,7 @@ $( document ).ready(function() {
       $.post({
         url: url,
         data: $form.serialize(),
+        async:false,
         success: function(data, status, xhr) {
           console.log(data);
         }
