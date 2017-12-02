@@ -104,6 +104,9 @@ int process_instructions(String instructions) {
         soleniod_state(value);
         delay(200);
         break;
+      case 'r':
+        rotate(value);
+        break;
     }
     instructions = instructions.substring(i+1);
   }
@@ -114,7 +117,7 @@ int preset_instructions(String instructions) {
   if (instructions == "squares") {
     instructions = "s1,s0,";
   } else if (instructions == "glasses") {
-    instructions = "s1,s0,s1,s0,";
+    instructions = "s0,f120,b-10,s1,b90,b60,s0,f50,r90,b-10,s1,b90,b60,s0,f40,b-10,s1,b90,b60,s0,f50,b-10,s1,b90,b60,s0,f40,b-10,s1,b90,b60,s0,f120,";
   }
   return process_instructions(instructions);
 }
