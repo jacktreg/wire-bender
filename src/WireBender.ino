@@ -12,7 +12,7 @@ Servo bend_servo;
 int process_instructions(String instructions);
 int bend_to_angle(String angle_string);
 int feed_mm(String mm_string);
-int rotate(String steps);
+int rotate(String num_steps);
 int soleniod_state(String binary_string);
 // Pin to control the servo
 const int servo_pin = D1;
@@ -116,7 +116,7 @@ int bend_to_angle(String angle_string) {
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
-    int servo_angle = map(angle, 90, -90, 21, 167);
+    int servo_angle = map(angle, 90, -90, 21, 158);
     bend_servo.write(servo_angle);
     return 1;
   } else {
@@ -146,7 +146,7 @@ int bend_to_angle(String angle_string) {
 // this function automatically gets called upon a matching POST request
 int feed_mm(String mm_string) {
   // Convert the string angle_string to an integer
-  int mm = mm_string.toInt();
+  int mm = -1 * mm_string.toInt();
   steps(step_pin,direction_pin,mmToSteps(mm));
   return 1;
 }
@@ -189,7 +189,9 @@ void avgError() {
 void steps(int step_pin, int direction_pin, int number_of_steps) {
   bool move_forward = true;
   // Establishing the direction
-  if (number_of_steps < 0) {
+  if (number_of_steps >= 0) {
+    move_forward = true;
+  } else {
     move_forward = false;
     number_of_steps = -number_of_steps;
   }
