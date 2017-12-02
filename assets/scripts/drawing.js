@@ -68,12 +68,16 @@ function updateTotalLength() {
 // Mapping from screen pixels to mm
 function pixelsToMM(p) {
   // Round to at most 2 decimal places
-  return Math.round(p / $("#pixel-input").val());
+  var pixels = $("#pixel-input").val();
+  if (pixels == 0 || pixels == NaN) {
+    pixels = 1;
+  }
+  return Math.round(p / pixels);
 }
 
 // Gets the angle b/t two vectors v1, v2 in degrees
 function getAngle(v1, v2) {
-  var angle = Math.round(-1 * Math.sign(v2.angle - v1.angle) * Math.acos(dot(v1, v2) / (v1.length * v2.length)) * 57.2958);
+  var angle =  Math.round(v1.getDirectedAngle(v2));
   return angle < 0 ? Math.max(angle,-90) : Math.min(angle, 90);
 }
 
@@ -100,11 +104,11 @@ function computeInstructions(segments) {
     var next_segment = segments[i + 2]._point - segments[i + 1]._point
     var angle = getAngle(current_segment, next_segment);
     // Find the proper solenoid initialization angle
-    var s_init = angle > 0 ? -10 : 10;
+    var s_init = angle > 0 ? -15 : 15;
     // Set the solenoid in down position
     result += "s 0\n";
     // Extrude the length of the path
-    result += "f " + pixelsToMM(current_segment.length) + "\n";
+    result += "f " + Math.max(40, pixelsToMM(current_segment.length)) + "\n";
     // Set the solenoid on the correct side (given angle direction)
     result += "b " + s_init + "\n";
     // Set the solenoid in up position
@@ -112,7 +116,7 @@ function computeInstructions(segments) {
     // Move solenoid to angle b/t segments
     result += "b " + angle + "\n";
     // Move the solenoid away from the wire a tad
-    angle = angle > 0 ? angle - 20 : angle + 20;
+    angle = angle > 0 ? angle - 40 : angle + 40;
     result += "b " + angle + "\n";
     if (i == segments.length - 3) {
       // Set the solenoid in down position

@@ -100,7 +100,7 @@ int process_instructions(String instructions) {
         break;
       case 's':
         soleniod_state(value);
-        delay(100);
+        delay(200);
         break;
     }
     instructions = instructions.substring(i+1);
@@ -116,7 +116,7 @@ int bend_to_angle(String angle_string) {
   int angle = angle_string.toInt();
 
   if (angle <= MAX_ANGLE && angle >= MIN_ANGLE) {
-    int servo_angle = map(angle, 90, -90, 21, 167);
+    int servo_angle = map(angle, 90, -91, 21, 167);
     bend_servo.write(servo_angle);
     return 1;
   } else {
